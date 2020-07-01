@@ -1,5 +1,7 @@
 <template>
     <div id="app">
+        <TrackingConsent theme="dark"/>
+
         <main :class="routeClass">
             <Sidebar/>
 
@@ -26,7 +28,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch, computed } from '@vue/composition-api';
-import { LoadingSpinner } from '@nimiq/vue-components';
+import { LoadingSpinner, TrackingConsent } from '@nimiq/vue-components';
 
 import Sidebar from './components/layouts/Sidebar.vue';
 import BetaNoticeModal from './components/modals/BetaNoticeModal.vue';
@@ -90,6 +92,7 @@ export default defineComponent({
         Sidebar,
         BetaNoticeModal,
         LoadingSpinner,
+        TrackingConsent,
     },
 });
 </script>
