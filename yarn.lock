@@ -946,9 +946,9 @@
   dependencies:
     big-integer "^1.6.44"
 
-"@nimiq/vue-components@https://github.com/nimiq/vue-components#build/wallet":
+"@nimiq/vue-components@https://github.com/nimiq/vue-components#build/translations":
   version "0.1.0"
-  resolved "https://github.com/nimiq/vue-components#38bf3dd36e324c682f88d3e2ddb98caef46f078b"
+  resolved "https://github.com/nimiq/vue-components#7e77700e60bcc6a6f875e494609577312add0d20"
   dependencies:
     "@nimiq/style" "^0.8.2"
     big-integer "^1.6.44"
