@@ -17,9 +17,14 @@
                 </button>
                 <button
                     class="reset icon-button"
-                    @click="$router.push('/receive')"
+                    @click="$event.currentTarget.focus() /* Required for MacOS Safari & Firefox */"
                 >
                     <MenuDotsIcon/>
+                    <div class="popup-menu nq-blue-bg">
+                        <button class="reset flex-row" @click="rename(activeAccountId, activeAddressInfo.address)">
+                            <RenameIcon/>{{ $t('Rename') }}
+                        </button>
+                    </div>
                 </button>
             </div>
             <div class="active-address flex-row">
@@ -36,7 +41,6 @@
                         </div>
                     </button>
                 </div>
-                <div class="label mobile">{{activeAddressInfo.label}}</div>
                 <div class="meta">
                     <div class="flex-row">
                         <div class="label">{{activeAddressInfo.label}}</div>
@@ -46,7 +50,9 @@
                         <!-- We need to key the Copyable component, so that the tooltip disappears when
                              switching addresses while the tooltip is showing -->
                         <Copyable :text="activeAddressInfo.address" :key="activeAddressInfo.address">
-                            <div class="address">{{activeAddressInfo.address}}</div>
+                            <div class="address" :class="{'masked': isAddressCutOff}" ref="$address">
+                                {{activeAddressInfo.address}}
+                            </div>
                         </Copyable>
                         <FiatConvertedAmount :amount="activeAddressInfo.balance"/>
                     </div>
@@ -99,7 +105,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from '@vue/composition-api';
+import { defineComponent, ref, watch, onMounted, onUnmounted } from '@vue/composition-api';
 import { Identicon, GearIcon, Copyable, ArrowRightSmallIcon, ArrowLeftIcon, MenuDotsIcon } from '@nimiq/vue-components';
 // @ts-ignore missing types for this package
 import { Portal } from '@linusborg/vue-simple-portal';
@@ -114,6 +120,7 @@ import RenameIcon from '../icons/AccountMenu/RenameIcon.vue';
 import { useAccountStore } from '../../stores/Account';
 import { useAddressStore } from '../../stores/Address';
 import { onboard, rename } from '../../hub'; // eslint-disable-line import/no-cycle
+import { useWindowSize } from '../../composables/useWindowSize';
 
 export default defineComponent({
     name: 'address-overview',
@@ -144,6 +151,39 @@ export default defineComponent({
             clearSearchString();
         });
 
+        const $address = ref<HTMLDivElement>(null);
+        const isAddressCutOff = ref(false);
+
+        const { width: windowWidth } = useWindowSize();
+
+        // FIXME: Remove when Typescript supports ResizeObserver
+        type ResizeObserver = any;
+
+        let observer: ResizeObserver;
+
+        onMounted(() => {
+            if ('ResizeObserver' in window && $address.value) {
+                // @ts-ignore ResizeObserver not supported by Typescript yet
+                observer = new ResizeObserver((entries: ResizeObserverEntry[]) => {
+                    const entry = entries[0];
+                    const width = entry.contentBoxSize ? entry.contentBoxSize.inlineSize : entry.contentRect.width;
+                    const cutoffWidth = windowWidth.value > 1160
+                        ? 396
+                        : windowWidth.value > 700
+                            ? 372
+                            : 322;
+                    isAddressCutOff.value = width < cutoffWidth;
+                });
+                observer.observe($address.value);
+            }
+        });
+
+        onUnmounted(() => {
+            if (observer && $address.value) {
+                observer.unobserve($address.value);
+            }
+        });
+
         return {
             searchString,
             activeAccountId,
@@ -154,6 +194,8 @@ export default defineComponent({
             setUnclaimedCashlinkCount,
             showUnclaimedCashlinkList,
             hideUnclaimedCashlinkList,
+            $address,
+            isAddressCutOff,
         };
     },
     components: {
@@ -251,56 +293,6 @@ export default defineComponent({
                 opacity: 0.5;
                 transition: opacity 0.3s var(--nimiq-ease);
             }
-
-            .popup-menu {
-                position: absolute;
-                top: -0.25rem;
-                left: -0.25rem;
-                font-size: var(--body-size);
-                padding: 0.5rem;
-                font-weight: 600;
-                border-radius: 0.5rem;
-                z-index: 1;
-                pointer-events: none;
-                opacity: 0;
-                transition: opacity 0.3s var(--nimiq-ease);
-
-                button {
-                    padding: 1rem 1.5rem 1rem 1rem;
-                    border-radius: 0.25rem;
-                    transition: background-color .3s var(--nimiq-ease);
-
-                    svg {
-                        width: 2.75rem;
-                        height: 3rem;
-                        margin: -0.125rem 1rem -0.125rem 0;
-                        opacity: 0.8;
-                    }
-
-                    &:hover,
-                    &:focus {
-                        background: rgba(255, 255, 255, 0.12);
-                    }
-                }
-            }
-
-            &:hover,
-            &:focus,
-            &:focus-within {
-                opacity: 1;
-
-                .nq-icon {
-                    opacity: 0.8;
-                }
-            }
-
-            &:focus,
-            &:focus-within {
-                .popup-menu {
-                    pointer-events: all;
-                    opacity: 1;
-                }
-            }
         }
     }
 
@@ -347,10 +339,13 @@ export default defineComponent({
     }
 
     .address {
-        text-overflow: ellipsis;
         word-spacing: -0.2em;
         font-family: "Fira Mono", monospace; // TODO: Improve monospace font stack
         transition: opacity .3s var(--nimiq-ease);
+
+        &.masked {
+            mask: linear-gradient(90deg , white, white calc(100% - 3rem), rgba(255,255,255, 0));
+        }
     }
 
     .copyable {
@@ -386,10 +381,6 @@ export default defineComponent({
         line-height: 1;
     }
 
-    .label.mobile {
-        display: none;
-    }
-
     &:hover {
         .identicon-wrapper .identicon-menu {
             opacity: 1;
@@ -408,6 +399,68 @@ export default defineComponent({
     button {
         flex-shrink: 0;
     }
+}
+
+.actions-mobile .icon-button,
+.active-address .identicon-wrapper .identicon-menu {
+    .popup-menu {
+        position: absolute;
+        font-size: var(--body-size);
+        padding: 0.5rem;
+        font-weight: 600;
+        border-radius: 0.5rem;
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s var(--nimiq-ease);
+
+        button {
+            align-items: center;
+            padding: 1rem 1.5rem 1rem 1rem;
+            border-radius: 0.25rem;
+            transition: background-color .3s var(--nimiq-ease);
+
+            svg {
+                width: 2.75rem;
+                height: 3rem;
+                margin: -0.125rem 1rem -0.125rem 0;
+                opacity: 0.8;
+            }
+
+            &:hover,
+            &:focus {
+                background: rgba(255, 255, 255, 0.12);
+            }
+        }
+    }
+
+    &:hover,
+    &:focus,
+    &:focus-within {
+        opacity: 1;
+
+        .nq-icon {
+            opacity: 0.8;
+        }
+    }
+
+    &:focus,
+    &:focus-within {
+        .popup-menu {
+            pointer-events: all;
+            opacity: 1;
+        }
+    }
+}
+
+.actions-mobile .icon-button .popup-menu {
+    top: 1.375rem;
+    right: var(--padding);
+}
+
+.active-address .identicon-wrapper .identicon-menu .popup-menu {
+    top: -0.25rem;
+    left: -0.25rem;
 }
 
 .send, .receive {
@@ -528,42 +581,20 @@ export default defineComponent({
             margin: -0.25rem 0; // Negative margin above and below to size identicon to be 46x40 px
         }
 
-        .meta {
-            flex-shrink: 0;
-
-            .flex-row {
-                justify-content: flex-end;
-            }
-
-            .copyable,
-            .label {
-                display: none;
-            }
-        }
-
-        .label.mobile {
-            display: block;
-        }
-
-        .label {
-            // mask: linear-gradient(90deg , white, white calc(100% - 4rem), rgba(255,255,255, 0));
-            mask: none;
-            white-space: unset;
-            line-height: 1.2;
-            margin: 0 2rem 0 0;
+        .label,
+        .copyable {
+            margin-right: 1.25rem;
         }
 
         .label,
         .amount {
             font-size: var(--h2-size);
+            margin-bottom: 0;
         }
 
+        .address,
         .fiat-amount {
             font-size: var(--small-size);
-        }
-
-        .amount {
-            margin-bottom: 0.5rem;
         }
     }
 

@@ -13,14 +13,14 @@
             />
         </svg>
 
-        <div v-if="showTimespanLabel" class="timespan">24H</div>
+        <button v-if="showTimespanLabel" class="reset timespan" @click="$emit('timespan')">{{ timeRange }}</button>
 
         <div class="meta flex-row">
             <strong>{{currency.toUpperCase()}}</strong>
             <div class="price">
                 <transition name="fade">
-                    <FiatAmount v-if="endPrice !== undefined"
-                        :amount="endPrice"
+                    <FiatAmount v-if="currentPrice !== undefined"
+                        :amount="currentPrice"
                         :currency="fiatCurrency"
                         :maxRelativeDeviation="0.001"
                     />
@@ -42,8 +42,12 @@ import { FiatAmount } from '@nimiq/vue-components';
 import { CryptoCurrency } from '../lib/Constants';
 import { useFiatStore } from '../stores/Fiat';
 
+export enum TimeRange {
+    '24h' = '24h',
+    '7d' = '7d',
+}
+
 export default defineComponent({
-    name: 'price-chart',
     props: {
         currency: {
             type: String,
@@ -54,8 +58,15 @@ export default defineComponent({
             type: Boolean,
             default: true,
         },
+        timeRange: {
+            type: String,
+            required: false,
+            default: TimeRange['24h'],
+            validator: (range) => Object.values(TimeRange).includes(range),
+        },
     },
-    setup(props: any) {
+    // @ts-ignore (The "validator" for the currency prop throws off the automatic prop typing)
+    setup(props) {
         const $svg = ref<SVGElement|null>(null);
         const $path = ref<SVGPathElement|null>(null);
         const history = ref<Array<[/* timestamp */number, /* price */number]>>([]);
@@ -84,19 +95,19 @@ export default defineComponent({
         });
         onUnmounted(() => window.removeEventListener('resize', onResize));
 
+        const { exchangeRates, currency: fiatCurrency, timestamp: lastExchangeRateUpdateTime } = useFiatStore();
+
         // Calculate price change
         const startPrice = computed(() => history.value[0]?.[1]);
-        const endPrice = computed(() => history.value[history.value.length - 1]?.[1]);
-        const priceChange = computed(() => endPrice.value !== undefined && startPrice.value !== undefined
-            ? (endPrice.value - startPrice.value) / startPrice.value
+        const currentPrice = computed(() => exchangeRates.value[props.currency]?.[fiatCurrency.value]);
+        const priceChange = computed(() => (currentPrice.value && startPrice.value)
+            ? (currentPrice.value - startPrice.value) / startPrice.value
             : undefined);
-        const priceChangeClass = computed(() => priceChange.value === undefined
+        const priceChangeClass = computed(() => !priceChange.value
             ? 'none'
             : priceChange.value > 0
                 ? 'positive'
-                : priceChange.value < 0
-                    ? 'negative'
-                    : 'none');
+                : 'negative');
 
         // Calculate path
         const path = computed(() => {
@@ -166,10 +177,18 @@ export default defineComponent({
             }).join(' ')}`;
         });
 
-        const fiatStore = useFiatStore();
+        watch(() => [
+            props.currency,
+            props.timeRange,
+            fiatCurrency.value,
+            lastExchangeRateUpdateTime.value, // Update together with main exchange rate
+        ], ([cryptoCurrency, timeRange, fiatCode], oldValues?: any[]) => {
+            const oldTimeRange = oldValues ? oldValues[1] : props.timeRange;
 
-        watch(() => [props.currency, fiatStore.currency.value], ([cryptoCurrency, fiatCurrency]) => {
-            const timespan = 24 * 60 * 60 * 1000; // 24 hours
+            const timeRangeHours = timeRange === TimeRange['24h']
+                ? 24
+                : 7 * 24; // 7d
+            const timespan = timeRangeHours * 60 * 60 * 1000; // Milliseconds
             const sampleCount = 18; // 18 is the number of points determined to look good
             const timestep = timespan / (sampleCount - 1);
             const start = Date.now() - timespan;
@@ -178,16 +197,23 @@ export default defineComponent({
                 timestamps.push(start + i * timestep);
             }
 
-            // Reset old data.
-            history.value = [];
+            if (oldTimeRange !== timeRange) {
+                // Clear chart when switching time range
+                history.value = [];
+            }
+
+            // eslint-disable-next-line no-console
+            console.debug(`Updating historic exchange rates for ${cryptoCurrency.toUpperCase()}`);
 
             getHistoricExchangeRates(
                 cryptoCurrency,
-                fiatCurrency,
+                fiatCode,
                 timestamps,
                 true, // disable minutely data
             ).then(
-                (exchangeRates) => history.value = [...exchangeRates.entries()] as Array<[number, number]>,
+                // TODO: Replace last rate with the current price from the FiatStore?
+                //       The historic rates latest timestamp can be up to 10 minutes old.
+                (historicRates) => history.value = [...historicRates.entries()] as Array<[number, number]>,
             );
         });
 
@@ -211,8 +237,8 @@ export default defineComponent({
             strokeWidth,
             viewBox,
             path,
-            fiatCurrency: fiatStore.currency,
-            endPrice,
+            fiatCurrency,
+            currentPrice,
             history,
             priceChange,
             priceChangeClass,

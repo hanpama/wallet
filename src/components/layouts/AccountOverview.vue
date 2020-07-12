@@ -212,7 +212,8 @@ export default defineComponent({
     font-size: var(--body-size);
 
     .alert-icon {
-        margin: 0 1rem;
+        width: calc(1.0625 * var(--body-size)); // 1.0625 * 16px = 17px
+        margin: 0 calc(1rem - 0.0625 * var(--body-size)) 0 1rem;
         flex-shrink: 0;
     }
 
@@ -297,10 +298,6 @@ export default defineComponent({
 }
 
 @media (max-width: 1160px) { // Half mobile breakpoint
-    .account-overview .backup-warning {
-        margin-bottom: calc(2 * var(--item-margin));
-    }
-
     .mobile-menu-bar {
         display: flex;
         flex-shrink: 0;

@@ -2,12 +2,12 @@
     <div class="sidebar padding flex-column" ref="sidebar">
         <div v-if="isTestnet" class="testnet-notice flex-row">
             <StreetconeIcon/>
-            <span class="nq-label">Testnet</span>
+            <span class="nq-label">{{ $t('Testnet') }}</span>
             <div class="flex-grow"></div>
-            <Tooltip preferredPosition="bottom left" theme="inverse" :styles="{transform: 'translate(2rem, 2rem)'}">
+            <Tooltip preferredPosition="bottom left" theme="inverse" :styles="{transform: 'translate(0.5rem, 2rem)'}">
                 <InfoCircleIcon slot="trigger"/>
-                <p>You are connecting to the Nimiq Testnet.</p>
-                <p>Please do not use your Mainnet accounts!</p>
+                <p>{{ $t('You are connecting to the Nimiq Testnet.') }}</p>
+                <p>{{ $t('Please do not use your Mainnet accounts!') }}</p>
             </Tooltip>
         </div>
 
@@ -19,8 +19,8 @@
         <AnnouncementBox/>
 
         <div class="price-chart-wrapper">
-            <PriceChart currency="nim"/>
-            <PriceChart currency="btc" :showTimespanLabel="false"/>
+            <PriceChart currency="nim" @timespan="switchPriceChartTimeRange" :timeRange="priceChartTimeRange"/>
+            <PriceChart currency="btc" :showTimespanLabel="false" :timeRange="priceChartTimeRange"/>
         </div>
 
         <div class="trade-actions">
@@ -54,14 +54,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api';
+import { defineComponent, ref } from '@vue/composition-api';
 import { GearIcon, Tooltip, InfoCircleIcon } from '@nimiq/vue-components';
 
 import Config from 'config';
 
 import AnnouncementBox from '../AnnouncementBox.vue';
 import AccountMenu from '../AccountMenu.vue';
-import PriceChart from '../PriceChart.vue';
+import PriceChart, { TimeRange } from '../PriceChart.vue';
 import ConsensusIcon from '../ConsensusIcon.vue';
 import StreetconeIcon from '../icons/StreetconeIcon.vue';
 
@@ -74,7 +74,7 @@ export default defineComponent({
         const { width } = useWindowSize();
 
         function navigateTo(path: string) {
-            if (width.value < 700) { // Full mobile breakpoint
+            if (width.value <= 700) { // Full mobile breakpoint
                 context.root.$router.replace(path);
             } else {
                 context.root.$router.push(path).catch(() => { /* ignore */ });
@@ -83,9 +83,20 @@ export default defineComponent({
 
         const isTestnet = Config.environment === ENV_TEST || Config.environment === ENV_DEV;
 
+        const priceChartTimeRange = ref(TimeRange['24h']);
+        function switchPriceChartTimeRange() {
+            if (priceChartTimeRange.value === TimeRange['24h']) {
+                priceChartTimeRange.value = TimeRange['7d'];
+            } else {
+                priceChartTimeRange.value = TimeRange['24h'];
+            }
+        }
+
         return {
             navigateTo,
             isTestnet,
+            priceChartTimeRange,
+            switchPriceChartTimeRange,
         };
     },
     components: {
@@ -121,12 +132,13 @@ export default defineComponent({
     align-items: center;
     width: calc(100% + calc(2 * var(--padding-sides)));
     margin: calc(-1 * var(--padding-top)) calc(-1 * var(--padding-sides)) var(--padding-top);
-    padding: var(--padding-sides) calc(var(--padding-sides) * 2);
+    padding: var(--padding-sides);
     background: rgba(255, 255, 255, .07);
 
     .nq-label {
+        font-size: var(--small-label-size);
         color: var(--nimiq-orange);
-        margin: 0.25rem 0 0 1rem;
+        margin: 0 0 0 1rem;
     }
 
     .nq-icon {
@@ -177,7 +189,7 @@ export default defineComponent({
 .price-chart-wrapper {
     overflow-y: auto;
     width: 100%;
-    min-height: 120px;
+    min-height: 10rem;
 
     mask: linear-gradient(0deg ,
         rgba(255,255,255, 0),

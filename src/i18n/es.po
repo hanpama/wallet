@@ -20,7 +20,7 @@ msgid "{count} Peer | {count} Peers"
 msgstr "{count} Pares | {count} Pares"
 
 #: src/components/layouts/AddressOverview.vue:13
-#: src/components/layouts/AddressOverview.vue:64
+#: src/components/layouts/AddressOverview.vue:69
 msgid "{count} pending Cashlink | {count} pending Cashlinks"
 msgstr "{count} Cashlink en trámite | {count} Cashlinks en trámite"
 
@@ -48,7 +48,7 @@ msgstr ""
 msgid "Accounts"
 msgstr "Cuentas"
 
-#: src/components/modals/SendModal.vue:146
+#: src/components/modals/SendModal.vue:135
 msgid "Add a public message..."
 msgstr "Agrega un mensaje público..."
 
@@ -145,7 +145,7 @@ msgstr "Comprar y vender con su billetera."
 msgid "Buy NIM"
 msgstr "Comprar NIM"
 
-#: src/components/modals/SendModal.vue:171
+#: src/components/modals/SendModal.vue:160
 msgid ""
 "By adding a transaction fee, you can influence how fast your transaction "
 "will be processed."
@@ -183,7 +183,7 @@ msgstr "Cambiar ajustes de lenguaje."
 msgid "Choose a Recipient"
 msgstr "Elija un Destinatario"
 
-#: src/components/modals/SendModal.vue:161
+#: src/components/modals/SendModal.vue:150
 msgid "Choose an Address"
 msgstr "Elija una Dirección"
 
@@ -293,7 +293,7 @@ msgstr "Editar contactos"
 msgid "Edit the amount of decimals visible for NIM values."
 msgstr "Editar la cantidad de decimales visibles para valores en NIM"
 
-#: src/components/modals/SendModal.vue:478
+#: src/components/modals/SendModal.vue:473
 msgid "Edit transaction"
 msgstr "Editar transacción"
 
@@ -333,7 +333,7 @@ msgstr "Aplicación grifo no disponible"
 msgid "Faucet unavailable (wrong network)"
 msgstr "Aplicación grifo no disponible (red errónea)"
 
-#: src/components/modals/SendModal.vue:128
+#: src/components/modals/SendModal.vue:117
 msgid "fee"
 msgstr "cuota"
 
@@ -375,7 +375,7 @@ msgstr "Obtener NIM y BTC"
 msgid "Get NIM on {exchange}"
 msgstr "Obtener NIM en {exchange}"
 
-#: src/components/AnnouncementBox.vue:27
+#: src/components/AnnouncementBox.vue:32
 msgid "Got feedback? Found a bug?"
 msgstr ""
 
@@ -426,7 +426,7 @@ msgstr "Accesibilidad Mejorada"
 msgid "In cooperation with"
 msgstr "En cooperación con"
 
-#: src/components/modals/SendModal.vue:136
+#: src/components/modals/SendModal.vue:125
 msgid "Insufficient balance."
 msgstr "Balance insuficiente."
 
@@ -455,7 +455,7 @@ msgstr "Aprenda más"
 msgid "Learn more here"
 msgstr "Aprenda más aquí"
 
-#: src/components/layouts/AddressOverview.vue:87
+#: src/components/layouts/AddressOverview.vue:92
 msgid "Let's get started! Create your Nimiq account:"
 msgstr "¡Comencemos! Cree su cuenta Nimiq:"
 
@@ -577,6 +577,10 @@ msgstr "Cashlinks en trámite"
 msgid "Pending..."
 msgstr "En trámite..."
 
+#: src/components/layouts/Sidebar.vue:10
+msgid "Please do not use your Mainnet accounts!"
+msgstr ""
+
 #: src/components/modals/DisclaimerModal.vue:13
 msgid ""
 "Please note that wallet.nimiq.com, hub.nimiq.com & keyguard.nimiq.com are "
@@ -593,7 +597,7 @@ msgstr ""
 "dispositivo. Nimiq solo le facilita, a través de un navegador, crear, "
 "almacenar y acceder a su información e interactuar con la cadena de bloques."
 
-#: src/components/layouts/AddressOverview.vue:74
+#: src/components/layouts/AddressOverview.vue:79
 msgid "Receive"
 msgstr "Recibir"
 
@@ -618,7 +622,8 @@ msgid "Reference currency"
 msgstr "Moneda de referencia"
 
 #: src/components/AccountMenu.vue:43
-#: src/components/layouts/AddressOverview.vue:34
+#: src/components/layouts/AddressOverview.vue:25
+#: src/components/layouts/AddressOverview.vue:39
 msgid "Rename"
 msgstr "Renombrar"
 
@@ -632,7 +637,7 @@ msgstr ""
 "Reinicialice los ajustes de su billetera y recargue los datos de la cadena "
 "de bloques."
 
-#: src/components/modals/SendModal.vue:477
+#: src/components/modals/SendModal.vue:472
 msgid "Retry"
 msgstr "Intente de nuevo"
 
@@ -664,12 +669,11 @@ msgstr "Buscar Transacciones"
 msgid "Search Transactions by Contact, Address, etc."
 msgstr "Buscar Transacciones por Contacto, Dirección, etc."
 
-#: src/components/layouts/AddressOverview.vue:71
+#: src/components/layouts/AddressOverview.vue:76
 msgid "Send"
 msgstr "Enviar"
 
-#: src/components/modals/SendModal.vue:103
-#: src/components/modals/SendModal.vue:138
+#: src/components/AmountMenu.vue:13 src/components/modals/SendModal.vue:127
 msgid "Send all"
 msgstr "Enviar todo"
 
@@ -689,7 +693,7 @@ msgid "send and receive transactions."
 msgstr "envíe y reciba transacciones"
 
 #: src/components/modals/SendModal.vue:10
-#: src/components/modals/SendModal.vue:156
+#: src/components/modals/SendModal.vue:145
 msgid "Send Transaction"
 msgstr "Enviar Transacción"
 
@@ -697,15 +701,15 @@ msgstr "Enviar Transacción"
 msgid "Send, receive and hold BTC in your wallet."
 msgstr "Envíe, reciba y almacene BTC en su billetera."
 
-#: src/components/modals/SendModal.vue:474
+#: src/components/modals/SendModal.vue:469
 msgid "Sending Transaction"
 msgstr "Enviando Transacción"
 
-#: src/components/modals/SendModal.vue:509
+#: src/components/modals/SendModal.vue:504
 msgid "Sent {nim} NIM"
 msgstr "Se enviaron {nim} NIM"
 
-#: src/components/modals/SendModal.vue:505
+#: src/components/modals/SendModal.vue:500
 msgid "Sent {nim} NIM to {name}"
 msgstr "Se enviaron {nim} NIM a {name}"
 
@@ -718,7 +722,7 @@ msgstr "enviado el {dateAndTime}"
 msgid "Set Amount"
 msgstr "Ingrese el Monto"
 
-#: src/components/modals/SendModal.vue:98
+#: src/components/AmountMenu.vue:8
 msgid "Set fee"
 msgstr "Ingrese la cuota"
 
@@ -750,7 +754,7 @@ msgstr "Mostrar todas mis cuentas"
 msgid "Show Decimals"
 msgstr "Mostrar Decimales"
 
-#: src/components/layouts/AddressOverview.vue:88
+#: src/components/layouts/AddressOverview.vue:93
 msgid "Signup"
 msgstr "Regístrate"
 
@@ -758,11 +762,11 @@ msgstr "Regístrate"
 msgid "Skip for now"
 msgstr "Saltar por ahora"
 
-#: src/components/modals/SendModal.vue:520
+#: src/components/modals/SendModal.vue:515
 msgid "Something went wrong"
 msgstr "Algo ha salido mal"
 
-#: src/components/modals/SendModal.vue:169
+#: src/components/modals/SendModal.vue:158
 msgid "Speed up your transaction"
 msgstr "Acelere su transacción"
 
@@ -784,8 +788,12 @@ msgstr "Comenzando con cuentas bancarias Europeas en Q3 2020."
 msgid "Store, send and receive NIM."
 msgstr "Almacene, envíe y reciba NIM."
 
-#: src/components/AnnouncementBox.vue:28
+#: src/components/AnnouncementBox.vue:33
 msgid "Tell us here"
+msgstr ""
+
+#: src/components/layouts/Sidebar.vue:5
+msgid "Testnet"
 msgstr ""
 
 #: src/components/modals/MigrationWelcomeModal.vue:7
@@ -831,8 +839,8 @@ msgstr "No hay opción de \"Olvidé mi contraseña\""
 msgid "This is a Legacy Account"
 msgstr "Esta es una Cuenta Versión Antigua"
 
-#: src/components/TransactionList.vue:237
-#: src/components/TransactionList.vue:253
+#: src/components/TransactionList.vue:238
+#: src/components/TransactionList.vue:254
 msgid "This month"
 msgstr "Este mes"
 
@@ -885,6 +893,10 @@ msgstr "¿Qué más?"
 msgid "You are a part of the Nimiq Blockchain."
 msgstr "Ahora es parte de la cadena de bloques Nimiq."
 
+#: src/components/layouts/Sidebar.vue:9
+msgid "You are connecting to the Nimiq Testnet."
+msgstr ""
+
 #: src/components/LegacyAccountNotice.vue:4
 msgid "You are using a Legacy Account "
 msgstr "Esta usando una Cuenta versión antigua "
@@ -893,7 +905,7 @@ msgstr "Esta usando una Cuenta versión antigua "
 msgid "You now own crypto!"
 msgstr "¡Ahora posee criptomonedas!"
 
-#: src/components/modals/SendModal.vue:132
+#: src/components/modals/SendModal.vue:121
 msgid "You will send {amount} NIM"
 msgstr "Va a enviar {amount} NIM"
 

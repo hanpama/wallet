@@ -11,7 +11,7 @@ msgid "{count} Peer | {count} Peers"
 msgstr ""
 
 #: src/components/layouts/AddressOverview.vue:13
-#: src/components/layouts/AddressOverview.vue:64
+#: src/components/layouts/AddressOverview.vue:69
 msgid "{count} pending Cashlink | {count} pending Cashlinks"
 msgstr ""
 
@@ -35,7 +35,7 @@ msgstr ""
 msgid "Accounts"
 msgstr ""
 
-#: src/components/modals/SendModal.vue:146
+#: src/components/modals/SendModal.vue:135
 msgid "Add a public message..."
 msgstr ""
 
@@ -125,7 +125,7 @@ msgstr ""
 msgid "Buy NIM"
 msgstr ""
 
-#: src/components/modals/SendModal.vue:171
+#: src/components/modals/SendModal.vue:160
 msgid "By adding a transaction fee, you can influence how fast your transaction will be processed."
 msgstr ""
 
@@ -159,7 +159,7 @@ msgstr ""
 msgid "Choose a Recipient"
 msgstr ""
 
-#: src/components/modals/SendModal.vue:161
+#: src/components/modals/SendModal.vue:150
 msgid "Choose an Address"
 msgstr ""
 
@@ -263,7 +263,7 @@ msgstr ""
 msgid "Edit the amount of decimals visible for NIM values."
 msgstr ""
 
-#: src/components/modals/SendModal.vue:478
+#: src/components/modals/SendModal.vue:473
 msgid "Edit transaction"
 msgstr ""
 
@@ -303,7 +303,7 @@ msgstr ""
 msgid "Faucet unavailable (wrong network)"
 msgstr ""
 
-#: src/components/modals/SendModal.vue:128
+#: src/components/modals/SendModal.vue:117
 msgid "fee"
 msgstr ""
 
@@ -345,7 +345,7 @@ msgstr ""
 msgid "Get NIM on {exchange}"
 msgstr ""
 
-#: src/components/AnnouncementBox.vue:27
+#: src/components/AnnouncementBox.vue:32
 msgid "Got feedback? Found a bug?"
 msgstr ""
 
@@ -390,7 +390,7 @@ msgstr ""
 msgid "In cooperation with"
 msgstr ""
 
-#: src/components/modals/SendModal.vue:136
+#: src/components/modals/SendModal.vue:125
 msgid "Insufficient balance."
 msgstr ""
 
@@ -419,7 +419,7 @@ msgstr ""
 msgid "Learn more here"
 msgstr ""
 
-#: src/components/layouts/AddressOverview.vue:87
+#: src/components/layouts/AddressOverview.vue:92
 msgid "Let's get started! Create your Nimiq account:"
 msgstr ""
 
@@ -525,11 +525,15 @@ msgstr ""
 msgid "Pending..."
 msgstr ""
 
+#: src/components/layouts/Sidebar.vue:10
+msgid "Please do not use your Mainnet accounts!"
+msgstr ""
+
 #: src/components/modals/DisclaimerModal.vue:13
 msgid "Please note that wallet.nimiq.com, hub.nimiq.com & keyguard.nimiq.com are not \"hosted wallets\". You do not create a hosted account or give Nimiq your funds to hold onto. You hold your keys that control the funds at your account addresses on your device. Nimiq only makes it easy for you, through a browser, to create, save, and access your information and interact with the blockchain."
 msgstr ""
 
-#: src/components/layouts/AddressOverview.vue:74
+#: src/components/layouts/AddressOverview.vue:79
 msgid "Receive"
 msgstr ""
 
@@ -555,7 +559,8 @@ msgid "Reference currency"
 msgstr ""
 
 #: src/components/AccountMenu.vue:43
-#: src/components/layouts/AddressOverview.vue:34
+#: src/components/layouts/AddressOverview.vue:25
+#: src/components/layouts/AddressOverview.vue:39
 msgid "Rename"
 msgstr ""
 
@@ -567,7 +572,7 @@ msgstr ""
 msgid "Reset your wallet settings and reload data from the blockchain."
 msgstr ""
 
-#: src/components/modals/SendModal.vue:477
+#: src/components/modals/SendModal.vue:472
 msgid "Retry"
 msgstr ""
 
@@ -597,12 +602,12 @@ msgstr ""
 msgid "Search Transactions by Contact, Address, etc."
 msgstr ""
 
-#: src/components/layouts/AddressOverview.vue:71
+#: src/components/layouts/AddressOverview.vue:76
 msgid "Send"
 msgstr ""
 
-#: src/components/modals/SendModal.vue:103
-#: src/components/modals/SendModal.vue:138
+#: src/components/AmountMenu.vue:13
+#: src/components/modals/SendModal.vue:127
 msgid "Send all"
 msgstr ""
 
@@ -619,7 +624,7 @@ msgid "send and receive transactions."
 msgstr ""
 
 #: src/components/modals/SendModal.vue:10
-#: src/components/modals/SendModal.vue:156
+#: src/components/modals/SendModal.vue:145
 msgid "Send Transaction"
 msgstr ""
 
@@ -627,15 +632,15 @@ msgstr ""
 msgid "Send, receive and hold BTC in your wallet."
 msgstr ""
 
-#: src/components/modals/SendModal.vue:474
+#: src/components/modals/SendModal.vue:469
 msgid "Sending Transaction"
 msgstr ""
 
-#: src/components/modals/SendModal.vue:509
+#: src/components/modals/SendModal.vue:504
 msgid "Sent {nim} NIM"
 msgstr ""
 
-#: src/components/modals/SendModal.vue:505
+#: src/components/modals/SendModal.vue:500
 msgid "Sent {nim} NIM to {name}"
 msgstr ""
 
@@ -648,7 +653,7 @@ msgstr ""
 msgid "Set Amount"
 msgstr ""
 
-#: src/components/modals/SendModal.vue:98
+#: src/components/AmountMenu.vue:8
 msgid "Set fee"
 msgstr ""
 
@@ -678,7 +683,7 @@ msgstr ""
 msgid "Show Decimals"
 msgstr ""
 
-#: src/components/layouts/AddressOverview.vue:88
+#: src/components/layouts/AddressOverview.vue:93
 msgid "Signup"
 msgstr ""
 
@@ -686,11 +691,11 @@ msgstr ""
 msgid "Skip for now"
 msgstr ""
 
-#: src/components/modals/SendModal.vue:520
+#: src/components/modals/SendModal.vue:515
 msgid "Something went wrong"
 msgstr ""
 
-#: src/components/modals/SendModal.vue:169
+#: src/components/modals/SendModal.vue:158
 msgid "Speed up your transaction"
 msgstr ""
 
@@ -710,8 +715,12 @@ msgstr ""
 msgid "Store, send and receive NIM."
 msgstr ""
 
-#: src/components/AnnouncementBox.vue:28
+#: src/components/AnnouncementBox.vue:33
 msgid "Tell us here"
+msgstr ""
+
+#: src/components/layouts/Sidebar.vue:5
+msgid "Testnet"
 msgstr ""
 
 #: src/components/modals/MigrationWelcomeModal.vue:7
@@ -744,8 +753,8 @@ msgstr ""
 msgid "This is a Legacy Account"
 msgstr ""
 
-#: src/components/TransactionList.vue:237
-#: src/components/TransactionList.vue:253
+#: src/components/TransactionList.vue:238
+#: src/components/TransactionList.vue:254
 msgid "This month"
 msgstr ""
 
@@ -796,6 +805,10 @@ msgstr ""
 msgid "You are a part of the Nimiq Blockchain."
 msgstr ""
 
+#: src/components/layouts/Sidebar.vue:9
+msgid "You are connecting to the Nimiq Testnet."
+msgstr ""
+
 #: src/components/LegacyAccountNotice.vue:4
 msgid "You are using a Legacy Account "
 msgstr ""
@@ -804,7 +817,7 @@ msgstr ""
 msgid "You now own crypto!"
 msgstr ""
 
-#: src/components/modals/SendModal.vue:132
+#: src/components/modals/SendModal.vue:121
 msgid "You will send {amount} NIM"
 msgstr ""
 
