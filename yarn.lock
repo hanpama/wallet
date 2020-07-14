@@ -948,7 +948,7 @@
 
 "@nimiq/vue-components@https://github.com/nimiq/vue-components#build/translations":
   version "0.1.0"
-  resolved "https://github.com/nimiq/vue-components#d15c383333451005513615c2d324e19554c52597"
+  resolved "https://github.com/nimiq/vue-components#1ba3960dc093c500f931cdd5f7050c48a952e6d5"
   dependencies:
     "@nimiq/style" "^0.8.2"
     big-integer "^1.6.44"
